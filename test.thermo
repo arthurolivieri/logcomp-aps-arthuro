@@ -1,0 +1,16 @@
+// Programa simples para teste
+power on;
+mode cool;
+set temp 22;
+fan mid;
+
+x = 10 + 5;
+
+if (temp > 25) {
+  set temp 23;
+  fan high;
+}
+
+repeat 3 {
+  wait 60 seconds;
+}

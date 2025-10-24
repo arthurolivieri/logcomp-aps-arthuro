@@ -95,3 +95,123 @@ rule "presence-boost" {
   }
 }
 ```
+
+# Compilador
+
+## Ferramentas Utilizadas
+- **Flex** - Análise Léxica
+- **Bison** - Análise Sintática
+- **GCC** - Compilação do código C gerado
+
+## Estrutura do Projeto
+```
+.
+├── thermolang.l       # Especificação léxica (Flex)
+├── lex.yy.c           # Código C gerado por flex thermolang.l
+├── thermolang.y       # Especificação sintática (Bison)
+├── thermolang.tab.c   # Código C gerado por thermolang.y
+├── thermolang.tab.h   # Arquivo de cabeçalho gerado por thermolang.y
+├── test.thermo        # Programa de exemplo
+├── thermolang         # Executável gerado por gcc -Wall -g -o thermolang thermolang.tab.c lex.yy.c
+├── output.asm         # Assembly gerado por ./thermolang test.thermo output.asm
+└── README.md          # Este arquivo
+```
+
+## Como Compilar
+
+### Pré-requisitos
+```bash
+sudo apt-get install flex bison gcc
+```
+
+### Compilação do Compilador
+
+**Passo 1: Gerar o parser com Bison**
+```bash
+bison -d thermolang.y
+```
+
+**Passo 2: Gerar o scanner com Flex**
+```bash
+flex thermolang.l
+```
+
+**Passo 3: Compilar tudo**
+```bash
+gcc -Wall -g -o thermolang thermolang.tab.c lex.yy.c -lfl
+```
+
+### Uso
+```bash
+./thermolang  
+```
+
+**Exemplo:**
+```bash
+./thermolang test.thermo output.asm
+cat output.asm
+```
+
+## Exemplo de Programa ThermoLang
+```thermo
+// Controle automático de temperatura
+power on;
+mode cool;
+set temp 22;
+fan mid;
+
+if (temp > 25) {
+  set temp 23;
+  fan high;
+}
+
+repeat 3 {
+  wait 60 seconds;
+}
+```
+
+## Assembly Gerado
+
+O compilador gera instruções assembly como:
+```assembly
+POWER ON
+SET_MODE COOL
+LOAD_IMM T0, 22
+SET_TEMP T0
+SET_FAN MID
+READ_SENSOR T4, TEMP
+LOAD_IMM T5, 25
+CMP_GT T6, T4, T5
+JZ L0
+LOAD_IMM T7, 23
+SET_TEMP T7
+SET_FAN HIGH
+L0:
+HALT
+```
+
+## Etapas do Compilador
+
+1. **Análise Léxica (Flex)**: Converte código fonte em tokens
+2. **Análise Sintática (Bison)**: Valida estrutura gramatical
+3. **Geração de Código**: Produz assembly para AirConditioner VM
+
+## Instruções Assembly Suportadas
+
+### Controle do Dispositivo
+- `POWER ON/OFF`
+- `SET_MODE COOL/HEAT/DRY/FAN/AUTO`
+- `SET_TEMP Tn`
+- `SET_FAN OFF/LOW/MID/HIGH`
+- `SET_SWING ON/OFF`
+
+### Operações
+- `LOAD_IMM Tn, valor`
+- `ADD/SUB/MUL/DIV Td, T1, T2`
+- `CMP_EQ/NE/LT/LE/GT/GE Td, T1, T2`
+- `READ_SENSOR Tn, SENSOR`
+
+### Controle de Fluxo
+- `JZ/JNZ/JMP Ln`
+- `WAIT Tn`
+- `HALT`
