@@ -20,7 +20,34 @@ A sintaxe foi projetada para ser fácil de ler, próxima do português, para que
 
 ## VM AirConditioner
 A **AirConditioner VM** é a máquina virtual que executa o código gerado pelo compilador de ThermoLang.  
-Ela simula um aparelho de ar-condicionado inteligente e será futuramente estruturada.
+Ela simula um aparelho de ar-condicionado inteligente com sensores ambientais e controle completo do dispositivo.
+
+**Implementação**: `airconditioner_vm.py`  
+**Documentação completa**: [VM_README.md](VM_README.md)
+
+### Características da VM
+- ✅ **Turing-Completa**: Registradores, memória, comparações e saltos condicionais
+- ✅ **10 Registradores**: T0-T9 para computações
+- ✅ **4 Sensores**: TEMP, HUMIDITY, OCCUPIED, TIME (read-only)
+- ✅ **Modelo Térmico**: Simulação de aquecimento/resfriamento
+- ✅ **Controle Completo**: Power, modo, temperatura, ventilador, swing
+
+### Uso da VM
+
+**Executar programa compilado:**
+```bash
+python3 airconditioner_vm.py output.asm
+```
+
+**Executar programas demo:**
+```bash
+python3 airconditioner_vm.py
+```
+
+**Executar testes:**
+```bash
+python3 test_vm.py
+```
 
 ---
 

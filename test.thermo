@@ -1,16 +1,34 @@
-// Programa simples para teste
+// Simple ThermoLang Test Programs
+
+// Basic device control
 power on;
 mode cool;
 set temp 22;
 fan mid;
 
-x = 10 + 5;
+// Variable assignment
+comfort_temp = 21;
+eco_temp = 24;
 
+// Conditional based on temperature sensor
 if (temp > 25) {
-  set temp 23;
+  set temp comfort_temp;
   fan high;
 }
 
-repeat 3 {
-  wait 60 seconds;
+// Time-based control
+if (time >= 79200) {
+  set temp eco_temp;
+  fan low;
+}
+
+// Humidity control
+if (humidity > 70) {
+  mode dry;
+}
+
+// Presence detection
+if (occupied == 1) {
+  set temp 21;
+  fan mid;
 }
