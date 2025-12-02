@@ -23,7 +23,6 @@ A **AirConditioner VM** é a máquina virtual que executa o código gerado pelo 
 Ela simula um aparelho de ar-condicionado inteligente com sensores ambientais e controle completo do dispositivo.
 
 **Implementação**: `airconditioner_vm.py`  
-**Documentação completa**: [VM_README.md](VM_README.md)
 
 ### Características da VM
 - ✅ **Turing-Completa**: Registradores, memória, comparações e saltos condicionais
